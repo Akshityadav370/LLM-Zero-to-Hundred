@@ -1,6 +1,7 @@
 import gradio as gr
 import time
 import openai
+from openai import OpenAI
 import os
 from langchain.vectorstores import Chroma
 from typing import List, Tuple
@@ -63,17 +64,26 @@ class ChatBot:
         prompt = f"{chat_history}{retrieved_content}{question}"
         print("========================")
         print(prompt)
-        response = openai.ChatCompletion.create(
-            engine=APPCFG.llm_engine,
+        # response = openai.ChatCompletion.create(
+        #     engine=APPCFG.llm_engine,
+        #     messages=[
+        #         {"role": "system", "content": APPCFG.llm_system_role},
+        #         {"role": "user", "content": prompt}
+        #     ],
+        #     temperature=temperature,
+        #     # stream=False
+        # )
+        client = OpenAI()
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": APPCFG.llm_system_role},
                 {"role": "user", "content": prompt}
             ],
-            temperature=temperature,
-            # stream=False
+            temperature=temperature
         )
         chatbot.append(
-            (message, response["choices"][0]["message"]["content"]))
+            (message, response.choices[0].message.content))
         time.sleep(2)
 
         return "", chatbot, retrieved_content

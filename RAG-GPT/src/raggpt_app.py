@@ -21,6 +21,7 @@
     Note: The docstring provides an overview of the module's purpose and functionality, but detailed comments within the code
     explain specific components, interactions, and logic throughout the implementation.
 """
+import os
 import gradio as gr
 from utils.upload_file import UploadFile
 from utils.chatbot import ChatBot
@@ -52,7 +53,7 @@ with gr.Blocks() as demo:
                         bubble_full_width=False,
                         height=500,
                         avatar_images=(
-                            ("images/AI_RT.png"), "images/openai_.png"),
+                            ("images/avatar.png"), "images/openai_.png"),
                         # render=False
                     )
                     # **Adding like/dislike icons

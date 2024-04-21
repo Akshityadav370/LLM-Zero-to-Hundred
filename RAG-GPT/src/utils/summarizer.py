@@ -2,8 +2,10 @@
 from langchain.document_loaders import PyPDFLoader
 from utils.utilities import count_num_tokens
 import openai
+from openai import OpenAI
+from utils.load_config import LoadConfig
 
-
+APPCFG = LoadConfig()
 class Summarizer:
     """
     A class for summarizing PDF documents using OpenAI's ChatGPT engine.
@@ -107,12 +109,22 @@ class Summarizer:
         Returns:
             str: The response content from the ChatGPT engine.
         """
-        response = openai.ChatCompletion.create(
-            engine=gpt_model,
+        # response = openai.ChatCompletion.create(
+        #     engine=gpt_model,
+        #     messages=[
+        #         {"role": "system", "content": llm_system_role},
+        #         {"role": "user", "content": prompt}
+        #     ],
+        #     temperature=temperature,
+        # )
+        client = OpenAI()
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": llm_system_role},
+                {"role": "system", "content": APPCFG.llm_system_role},
                 {"role": "user", "content": prompt}
             ],
-            temperature=temperature,
+            temperature=temperature
         )
+        # return response.choices[0].message.content
         return response.choices[0].message.content

@@ -6,6 +6,7 @@ directories:
 
 embedding_model_config:
   engine: "text-embedding-ada-002"
+  # engine: "embedding"
 
 llm_config:
     llm_system_role: "You are a chatbot. You'll receive a prompt that includes a chat history, retrieved content from the vectorDB based on the user's question, and the source.\ 
@@ -22,7 +23,8 @@ llm_config:
     # User question:\n
     New question
     "
-    engine: "gpt-35-turbo"
+    engine: "gpt-3.5-turbo"
+    # engine: "text-embedding-ada-002"
     temperature: 0.0
     max_token: 4096
 
